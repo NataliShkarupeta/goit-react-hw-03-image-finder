@@ -8,14 +8,16 @@ export class Searchbar extends Component {
   takeText = e => {
     const { value } = e.target;
     this.setState({
-      word: value,
+      word: value.toLowerCase(),
     });
   };
 
   handelSubmit = e => {
     const { word } = this.state;
     e.preventDefault();
-
+    if (word.trim() === '') {
+      return;
+    }
     this.props.onSubmit(word);
     this.setState({ word: '' });
   };

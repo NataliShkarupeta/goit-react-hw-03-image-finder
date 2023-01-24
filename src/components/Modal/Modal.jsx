@@ -12,8 +12,7 @@ export class Modal extends Component {
   }
 
   closeModal=(e)=> {
-    // console.log(e.code);
-    //   console.log(this.props.show);
+   
     if (e.code === 'Escape') {
       this.props.show();
     }

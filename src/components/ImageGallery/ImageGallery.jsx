@@ -1,15 +1,26 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { Ul } from './ImageGallery.styled';
+import { ButtonLoad } from 'components/Button/Button';
 
-export const Gallery = ({ picturs }) => {
+
+export const Gallery = ({ picturs, showBigImg }) => {
+  // console.log(picturs);
   return (
-    <ul>
-      {picturs.map(({id,src,alt}) => {
-       return (<ImageGalleryItem
-          key={id}
-          src={src}
-          alt={alt}
-        />)
-      })}
-    </ul>
+    <>
+      <Ul>
+        {picturs.map(({ id, webformatURL, tags, largeImageURL }) => {
+          return (
+            <ImageGalleryItem
+              key={id}
+              src={webformatURL}
+              alt={tags}
+              showBigImg={showBigImg}
+              id={id}
+            />
+          );
+        })}
+      </Ul>
+      <ButtonLoad />
+    </>
   );
 };
