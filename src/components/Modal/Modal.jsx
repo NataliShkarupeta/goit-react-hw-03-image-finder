@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { Backdrop, ModalContent } from './Modal.styled';
 
@@ -11,15 +11,14 @@ export class Modal extends Component {
     window.removeEventListener('keydown', this.closeModal);
   }
 
-  closeModal=(e)=> {
+  closeModal = e => {
     if (e.code === 'Escape') {
       this.props.show();
     }
-  }
-
+  };
 
   render() {
-   return (
+    return (
       <Backdrop>
         <ModalContent>
           <img src={this.props.src} alt={this.props.alt} />
@@ -28,3 +27,9 @@ export class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  show: PropTypes.func.isRequired,
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};

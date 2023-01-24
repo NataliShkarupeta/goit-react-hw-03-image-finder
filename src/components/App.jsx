@@ -13,6 +13,7 @@ export class App extends Component {
     loading: false,
     image: '',
     page: 1,
+    hideButton: false,
   };
 
   componentDidUpdate(_, prevState) {
@@ -21,8 +22,8 @@ export class App extends Component {
       this.getPictures();
     }
 
-    if(prevState.namePicture !== namePicture && namePicture!==''){
-       this.setState({ page: 1, pictures: [] });
+    if (prevState.namePicture !== namePicture && namePicture !== '') {
+      this.setState({ page: 1, pictures: [], hideButton: false });
     }
   }
 
@@ -36,11 +37,14 @@ export class App extends Component {
         }
         return Promise.reject(new Error('Sorry no image'));
       })
-      .then(pictures =>
+      .then(pictures => {
+        if (pictures.hits < 12) {
+          this.setState({ hideButton: true });
+        }
         this.setState(prev => ({
           pictures: [...prev.pictures, ...pictures.hits],
-        }))
-      )
+        }));
+      })
 
       .catch(error => console.log(error))
       .finally(() => this.setState({ loading: false }));
@@ -54,10 +58,8 @@ export class App extends Component {
     this.setState(prev => ({ page: prev.page + 1 }));
   };
 
-  getSrcToModal = id => {
-    const el = this.state.pictures.find(pic => pic.id === id);
-    this.setState({ image: el });
-    console.log(this.state.image);
+  getSrcToModal = largeImageURL => {
+    this.setState({ image: largeImageURL });
   };
 
   toggleModal = () => {
@@ -65,17 +67,22 @@ export class App extends Component {
   };
 
   render() {
-    const { pictures, loading, image } = this.state;
+    const { pictures, loading, image, hideButton } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.valueFromInput} />
         {pictures && (
           <Gallery picturs={pictures} showBigImg={this.getSrcToModal} />
         )}
-        {pictures.length !== 0 && <ButtonLoad clicked={this.onLoadMore} />}
+        {pictures.length !== 0 && hideButton === false && (
+          <ButtonLoad clicked={this.onLoadMore} />
+        )}
+
         {loading && <Rings />}
 
-        {image && <Modal show={this.toggleModal} src={image.largeImageURL} />}
+        {image && (
+          <Modal show={this.toggleModal} src={image} alt="wonderful picture" />
+        )}
       </div>
     );
   }

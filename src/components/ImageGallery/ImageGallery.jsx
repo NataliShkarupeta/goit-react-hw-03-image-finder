@@ -1,26 +1,29 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Ul } from './ImageGallery.styled';
-// import { ButtonLoad } from 'components/Button/Button';
+import PropTypes from 'prop-types';
 
 
 export const Gallery = ({ picturs, showBigImg }) => {
-  // console.log(picturs);
   return (
     <>
       <Ul>
-        {picturs.map(({ id, webformatURL, tags,  }) => {
+        {picturs.map(({ id, webformatURL, tags, largeImageURL }) => {
           return (
             <ImageGalleryItem
               key={id}
               src={webformatURL}
               alt={tags}
               showBigImg={showBigImg}
-              id={id}
+              largeImageURL={largeImageURL}
             />
           );
         })}
       </Ul>
-   
     </>
   );
+};
+
+Gallery.propTypes = {
+  picturs: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  showBigImg:PropTypes.func.isRequired,
 };
