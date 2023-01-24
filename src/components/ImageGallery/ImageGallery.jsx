@@ -1,6 +1,6 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { Ul } from './ImageGallery.styled';
-import { ButtonLoad } from 'components/Button/Button';
+// import { ButtonLoad } from 'components/Button/Button';
 
 
 export const Gallery = ({ picturs, showBigImg }) => {
@@ -8,7 +8,7 @@ export const Gallery = ({ picturs, showBigImg }) => {
   return (
     <>
       <Ul>
-        {picturs.map(({ id, webformatURL, tags, largeImageURL }) => {
+        {picturs.map(({ id, webformatURL, tags,  }) => {
           return (
             <ImageGalleryItem
               key={id}
@@ -20,7 +20,7 @@ export const Gallery = ({ picturs, showBigImg }) => {
           );
         })}
       </Ul>
-      <ButtonLoad />
+   
     </>
   );
 };

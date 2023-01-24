@@ -1,4 +1,4 @@
-// import * as basicLightbox from 'basiclightbox';
+
 import { Component } from 'react';
 import { Backdrop, ModalContent } from './Modal.styled';
 
@@ -12,7 +12,6 @@ export class Modal extends Component {
   }
 
   closeModal=(e)=> {
-   
     if (e.code === 'Escape') {
       this.props.show();
     }

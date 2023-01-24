@@ -7,6 +7,7 @@ export const Header = styled.header`
   top: 0;
   z-index: 100;
   width: 100%;
+  margin-bottom: 100px;
 `;
 
 export const Form = styled.form`
