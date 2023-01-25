@@ -19,7 +19,7 @@ export class Modal extends Component {
 
   render() {
     return (
-      <Backdrop>
+      <Backdrop onClick={() => this.props.show()}>
         <ModalContent>
           <img src={this.props.src} alt={this.props.alt} />
         </ModalContent>

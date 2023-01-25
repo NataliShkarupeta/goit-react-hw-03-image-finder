@@ -5,6 +5,7 @@ import { Rings } from 'react-loader-spinner';
 import { Modal } from './Modal/Modal';
 import { Gallery } from './ImageGallery/ImageGallery';
 import { ButtonLoad } from './Button/Button';
+import Notiflix from 'notiflix';
 
 export class App extends Component {
   state = {
@@ -38,9 +39,12 @@ export class App extends Component {
         return Promise.reject(new Error('Sorry no image'));
       })
       .then(pictures => {
-        if (pictures.hits < 12) {
+        if (pictures.hits.length < 12) {
           this.setState({ hideButton: true });
-        }
+        } 
+        // if (pictures.hits.length === 0) {
+        //   this.createMassage();
+        // }
         this.setState(prev => ({
           pictures: [...prev.pictures, ...pictures.hits],
         }));
@@ -48,6 +52,10 @@ export class App extends Component {
 
       .catch(error => console.log(error))
       .finally(() => this.setState({ loading: false }));
+  };
+
+  createMassage = () => {
+    Notiflix.Notify.info('Sorry no image');
   };
 
   valueFromInput = namePicture => {
@@ -73,13 +81,12 @@ export class App extends Component {
         <Searchbar onSubmit={this.valueFromInput} />
         {pictures && (
           <Gallery picturs={pictures} showBigImg={this.getSrcToModal} />
-        )}
+        )}{' '}
         {pictures.length !== 0 && hideButton === false && (
           <ButtonLoad clicked={this.onLoadMore} />
         )}
-
+        {/* {pictures.length === 0 && Notiflix.Notify.info('Sorry no image')} */}
         {loading && <Rings />}
-
         {image && (
           <Modal show={this.toggleModal} src={image} alt="wonderful picture" />
         )}
