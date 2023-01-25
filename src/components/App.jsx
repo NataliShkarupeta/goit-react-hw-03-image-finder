@@ -39,12 +39,14 @@ export class App extends Component {
         return Promise.reject(new Error('Sorry no image'));
       })
       .then(pictures => {
+        console.log(pictures.hits.length);
+        if (pictures.hits.length === 0) {
+          this.createMassage();
+        }
         if (pictures.hits.length < 12) {
           this.setState({ hideButton: true });
-        } 
-        // if (pictures.hits.length === 0) {
-        //   this.createMassage();
-        // }
+        }
+
         this.setState(prev => ({
           pictures: [...prev.pictures, ...pictures.hits],
         }));
